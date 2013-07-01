@@ -1,0 +1,869 @@
+Only in Bae_yii1.1.10: appdemo.conf
+diff -ru yii-1.1.10.r3566/demos/blog/index.php Bae_yii1.1.10/demos/blog/index.php
+--- yii-1.1.10.r3566/demos/blog/index.php	2012-02-13 09:37:32.000000000 +0800
++++ Bae_yii1.1.10/demos/blog/index.php	2012-06-20 18:59:58.000000000 +0800
+@@ -3,7 +3,6 @@
+ // change the following paths if necessary
+ $yii=dirname(__FILE__).'/../../framework/yii.php';
+ $config=dirname(__FILE__).'/protected/config/main.php';
+-
+ // remove the following line when in production mode
+ // defined('YII_DEBUG') or define('YII_DEBUG',true);
+ 
+diff -ru yii-1.1.10.r3566/demos/blog/protected/config/main.php Bae_yii1.1.10/demos/blog/protected/config/main.php
+--- yii-1.1.10.r3566/demos/blog/protected/config/main.php	2012-02-13 09:37:32.000000000 +0800
++++ Bae_yii1.1.10/demos/blog/protected/config/main.php	2012-06-20 19:11:36.000000000 +0800
+@@ -26,21 +26,21 @@
+ 			// enable cookie-based authentication
+ 			'allowAutoLogin'=>true,
+ 		),
+-		'db'=>array(
+-			'connectionString' => 'sqlite:protected/data/blog.db',
+-			'tablePrefix' => 'tbl_',
+-		),
++/*              'db'=>array(
++                        'connectionString' => 'sqlite:protected/data/blog.db',
++                        'tablePrefix' => 'tbl_',
++                ),	*/
+ 		// uncomment the following to use a MySQL database
+-		/*
+-		'db'=>array(
++
++/*		'db'=>array(
+ 			'connectionString' => 'mysql:host=localhost;dbname=blog',
+ 			'emulatePrepare' => true,
+ 			'username' => 'root',
+ 			'password' => '',
+ 			'charset' => 'utf8',
+ 			'tablePrefix' => 'tbl_',
+-		),
+-		*/
++		),*/
++		
+ 		'errorHandler'=>array(
+ 			// use 'site/error' action to display errors
+             'errorAction'=>'site/error',
+@@ -68,9 +68,13 @@
+ 				*/
+ 			),
+ 		),
++//please don't config cache module ,use baememcache in baeconfig.php
++/*'cache'=>array(
++            'class'=>'system.caching.CMemCache',
++            ),*/
+ 	),
+ 
+ 	// application-level parameters that can be accessed
+ 	// using Yii::app()->params['paramName']
+ 	'params'=>require(dirname(__FILE__).'/params.php'),
+-);
+\ No newline at end of file
++);
+diff -ru yii-1.1.10.r3566/demos/blog/protected/controllers/SiteController.php Bae_yii1.1.10/demos/blog/protected/controllers/SiteController.php
+--- yii-1.1.10.r3566/demos/blog/protected/controllers/SiteController.php	2012-02-13 09:37:32.000000000 +0800
++++ Bae_yii1.1.10/demos/blog/protected/controllers/SiteController.php	2012-06-20 18:13:03.000000000 +0800
+@@ -49,7 +49,7 @@
+ 			if($model->validate())
+ 			{
+ 				$headers="From: {$model->email}\r\nReply-To: {$model->email}";
+-				mail(Yii::app()->params['adminEmail'],$model->subject,$model->body,$headers);
++				//mail(Yii::app()->params['adminEmail'],$model->subject,$model->body,$headers);
+ 				Yii::app()->user->setFlash('contact','Thank you for contacting us. We will respond to you as soon as possible.');
+ 				$this->refresh();
+ 			}
+@@ -91,4 +91,4 @@
+ 		Yii::app()->user->logout();
+ 		$this->redirect(Yii::app()->homeUrl);
+ 	}
+-}
+\ No newline at end of file
++}
+diff -ru yii-1.1.10.r3566/demos/helloworld/protected/controllers/SiteController.php Bae_yii1.1.10/demos/helloworld/protected/controllers/SiteController.php
+--- yii-1.1.10.r3566/demos/helloworld/protected/controllers/SiteController.php	2012-02-13 09:37:33.000000000 +0800
++++ Bae_yii1.1.10/demos/helloworld/protected/controllers/SiteController.php	2012-06-20 18:13:03.000000000 +0800
+@@ -10,6 +10,53 @@
+ 	 */
+ 	public function actionIndex()
+ 	{
++		//娴嬭瘯baelogRoute鍔熻兘
++	//Yii::log("test the BaeLogroute", CLogger::LEVEL_ERROR);
++
+ 		echo 'Hello World';
++	//娴嬭瘯set get鍑芥暟
++/*	$id = "test_setbaefunction";
++	$value = "test_setbaefunction";
++	Yii::app()->cache->set($id, $value);
++	$value=Yii::app()->cache->get($id);
++	echo $value."<br>";*/
++
++         //娴嬭瘯add鍑芥暟
++                /*$key = "test_add";
++                $value1 = "test_add";
++                $addvalue=Yii::app()->cache->add($key, $value1);
++                echo $value=Yii::app()->cache->get($key);*/
++
++                //娴嬭瘯delete鍑芥暟
++                /*$key = "test_delete";
++                Yii::app()->cache->add($key, "test_delete");
++                Yii::app()->cache->delete($key);
++                $value=Yii::app()->cache->get($key);
++                if($value == false)
++                {
++                  echo "delete". $key.":test_add success <br>";
++                }*/
++
++                //娴嬭瘯mget鍑芥暟
++                /*$key = "test_mget1";
++                $value="test_mget1";
++                $key1= "test_mget2";
++                $value1="test_mget2";
++                Yii::app()->cache->add($key, $value);
++                Yii::app()->cache->add($key1,$value1 );
++                $ids = array('id1'=>$key,'id2'=>$key1);
++		var_dump(Yii::app()->cache->mget($ids));*/
++
++                //娴嬭瘯flush鍑芥暟
++                //Yii::app()->cache->flush();
++
++                //娴嬭瘯replace鍑芥暟
++                /*$key = "test_replace";
++                $value = "replace_before";
++                Yii::app()->cache->set($key, $value);
++                echo Yii::app()->cache->get($key);
++                $value_after="replace_after";
++	        Yii::app()->cache->replace($key,$value_after );
++                echo Yii::app()->cache->get($key); */
+ 	}
+-}
+\ No newline at end of file
++}
+Only in Bae_yii1.1.10/framework: baeconf
+diff -ru yii-1.1.10.r3566/framework/base/CApplication.php Bae_yii1.1.10/framework/base/CApplication.php
+--- yii-1.1.10.r3566/framework/base/CApplication.php	2012-02-13 09:37:54.000000000 +0800
++++ Bae_yii1.1.10/framework/base/CApplication.php	2012-06-20 18:13:03.000000000 +0800
+@@ -733,7 +733,8 @@
+ 			$msg .= get_class($exception).': '.$exception->getMessage().' ('.$exception->getFile().':'.$exception->getLine().")\n";
+ 			$msg .= $exception->getTraceAsString()."\n";
+ 			$msg .= '$_SERVER='.var_export($_SERVER,true);
+-			error_log($msg);
++		//	error_log($msg);
++                        Yii::log($msg);
+ 			exit(1);
+ 		}
+ 	}
+@@ -816,7 +817,8 @@
+ 				$msg .= "Previous error:\n";
+ 				$msg .= $log."\n";
+ 				$msg .= '$_SERVER='.var_export($_SERVER,true);
+-				error_log($msg);
++				//error_log($msg);
++				Yii::log($msg);
+ 				exit(1);
+ 			}
+ 		}
+diff -ru yii-1.1.10.r3566/framework/base/CStatePersister.php Bae_yii1.1.10/framework/base/CStatePersister.php
+--- yii-1.1.10.r3566/framework/base/CStatePersister.php	2012-02-13 09:37:54.000000000 +0800
++++ Bae_yii1.1.10/framework/base/CStatePersister.php	2012-06-20 18:13:03.000000000 +0800
+@@ -64,7 +64,14 @@
+ 	{
+ 		parent::init();
+ 		if($this->stateFile===null)
+-			$this->stateFile=Yii::app()->getRuntimePath().DIRECTORY_SEPARATOR.'state.bin';
++			if(IS_BAE)
++			{
++				$this->stateFile=sys_get_temp_dir().DIRECTORY_SEPARATOR.'state.bin';
++			}
++			else
++			{
++				$this->stateFile=Yii::app()->getRuntimePath().DIRECTORY_SEPARATOR.'state.bin';
++			}
+ 		$dir=dirname($this->stateFile);
+ 		if(!is_dir($dir) || !is_writable($dir))
+ 			throw new CException(Yii::t('yii','Unable to create application state file "{file}". Make sure the directory containing the file exists and is writable by the Web server process.',
+@@ -85,7 +92,12 @@
+ 				return unserialize($value);
+ 			else if(($content=@file_get_contents($stateFile))!==false)
+ 			{
+-				$cache->set($cacheKey,$content,0,new CFileCacheDependency($stateFile));
++				if(IS_BAE)
++				{
++					$cache->set($cacheKey,$content);
++				}
++				else
++					$cache->set($cacheKey,$content,0,new CFileCacheDependency($stateFile));
+ 				return unserialize($content);
+ 			}
+ 			else
+@@ -103,6 +115,18 @@
+ 	 */
+ 	public function save($state)
+ 	{
++		if(IS_BAE)
++		{
++			if($this->cacheID!==false && ($cache=Yii::app()->getComponent($this->cacheID))!==null)
++                	{
++                        	$stateFile=$this->stateFile;
++	                        $cacheKey='Yii.CStatePersister.'.$stateFile;
++        	                $content = serialize($state);
++                        	$cache->set($cacheKey,$content);
++	                        return true;
++        	        }
++		}
++		
+ 		file_put_contents($this->stateFile,serialize($state),LOCK_EX);
+ 	}
+ }
+Only in Bae_yii1.1.10/framework/caching: CBaeMemCache.php
+diff -ru yii-1.1.10.r3566/framework/caching/CCache.php Bae_yii1.1.10/framework/caching/CCache.php
+--- yii-1.1.10.r3566/framework/caching/CCache.php	2012-02-13 09:37:51.000000000 +0800
++++ Bae_yii1.1.10/framework/caching/CCache.php	2012-06-20 20:05:53.000000000 +0800
+@@ -35,7 +35,7 @@
+  * <li>{@link setValue}</li>
+  * <li>{@link addValue}</li>
+  * <li>{@link deleteValue}</li>
+- * <li>{@link flush} (optional)</li>
++ * 不支持flush方法
+  * </ul>
+  *
+  * CCache also implements ArrayAccess so that it can be used like an array.
+@@ -72,6 +72,26 @@
+ 		return md5($this->keyPrefix.$key);
+ 	}
+ 
++	
++	
++	/**
++	 * Stores a value identified by a key into cache if the cache does not contain this key.
++	 * Nothing will be done if the cache already contains the key.
++	 * @param string $id the key identifying the value to be cached
++	 * @param mixed $value the value to be cached
++	 * @param integer $expire the number of seconds in which the cached value will expire. 0 means never expire.
++	 * @param ICacheDependency $dependency dependency of the cached item. If the dependency changes, the item is labeled invalid.
++	 * @return boolean true if the value is successfully stored into cache, false otherwise
++	 */
++	public function add($id,$value,$expire=0,$dependency=null)
++	{
++		Yii::trace('Adding "'.$id.'" to cache','system.caching.'.get_class($this));
++		if($dependency!==null)
++			$dependency->evaluateDependency();
++		$data=array($value,$dependency);
++		return $this->addValue($this->generateUniqueKey($id),serialize($data),$expire);
++	}
++	
+ 	/**
+ 	 * Retrieves a value from cache with a specified key.
+ 	 * @param string $id a key identifying the cached value
+@@ -79,6 +99,7 @@
+ 	 */
+ 	public function get($id)
+ 	{
++		
+ 		if(($value=$this->getValue($this->generateUniqueKey($id)))!==false)
+ 		{
+ 			$data=unserialize($value);
+@@ -87,12 +108,106 @@
+ 			if(!($data[1] instanceof ICacheDependency) || !$data[1]->getHasChanged())
+ 			{
+ 				Yii::trace('Serving "'.$id.'" from cache','system.caching.'.get_class($this));
++				
+ 				return $data[0];
+ 			}
+ 		}
+ 		return false;
+ 	}
+-
++/**
++	 * Stores a value identified by a key into cache.
++	 * If the cache already contains such a key, the existing value and
++	 * expiration time will be replaced with the new ones.
++	 *
++	 * @param string $id the key identifying the value to be cached
++	 * @param mixed $value the value to be cached
++	 * @param integer $expire the number of seconds in which the cached value will expire. 0 means never expire.
++	 * @param ICacheDependency $dependency dependency of the cached item. If the dependency changes, the item is labeled invalid.
++	 * @return boolean true if the value is successfully stored into cache, false otherwise
++	 */
++	public function set($id,$value,$expire=0,$dependency=null)
++	{
++		Yii::trace('Saving "'.$id.'" to cache','system.caching.'.get_class($this));
++		if($dependency!==null)
++			$dependency->evaluateDependency();
++		$data=array($value,$dependency);
++		return $this->setValue($this->generateUniqueKey($id),serialize($data),$expire);
++	}
++	
++	
++		/**
++	 * Deletes a value with the specified key from cache
++	 * @param string $id the key of the value to be deleted
++	 * @return boolean if no error happens during deletion
++	 */
++	public function delete($id,$expire=0)
++	{
++		Yii::trace('Deleting "'.$id.'" from cache','system.caching.'.get_class($this));
++		return $this->deleteValue($this->generateUniqueKey($id),$expire);
++	}
++	//bae不提供flush方法，如果用户使用了flush方法，会抛出一个异常，改为打log
++	public function flush()
++	{
++                Yii::trace('Flushing cache','system.caching.'.get_class($this));
++                return $this->flushValues();	
++	}
++	
++	public function replace($id,$value,$expire=0)
++	{
++	   
++	   if(($getvalue = $this->getValue($this->generateUniqueKey($id)))!==false)
++		{
++			$data=unserialize($getvalue);
++			
++			if(!is_array($data))
++				return false;
++			Yii::trace('replace "'.$id.'" from cache','system.caching.'.get_class($this));
++			
++			$data[0]=$value;
++		   
++		    return $this->replaceValue($this->generateUniqueKey($id),serialize($data),$expire);
++		}
++		return false;
++	}
++	
++	public function increment($id,$value=1)
++	{
++	  throw new CException(Yii::t('yii','{className} does not support increment() functionality.',
++			array('{className}'=>get_class($this))));
++	  /*if($var=$this->getValue($this->generateUniqueKey($id))!==false)
++	  {
++	    $data = unserialize($var);
++		if(!is_array($data))
++		    return false;
++		if(is_numeric[$data[0]]){
++		$data[0] = $data[0] +$value;}
++		Yii::trace('increment "'.$id.'" from cache','system.caching.'.get_class($this));
++		return $this->setValue($this->generateUniqueKey($id),serialize($data),$expire);
++	  }
++	  else
++	  return false;*/
++	}
++	public function decrement($id,$value=1)
++	{
++	throw new CException(Yii::t('yii','{className} does not support decrement() functionality.',
++			array('{className}'=>get_class($this))));
++	/*  if($var=$this->getValue($this->generateUniqueKey($id))!==false)
++	  {
++	    $data = unserialize($var);
++		if(!is_array($data))
++		    return false;
++		$data[0] = $data[0] - $value;
++		Yii::trace('decrement "'.$id.'" from cache','system.caching.'.get_class($this));
++		return $this->setValue($this->generateUniqueKey($id),serialize($data),$expire);
++	  }
++	  else
++	  return false;*/
++	}
++	/* protected function incrementValue($key,$value)
++	{
++		throw new CException(Yii::t('yii','{className} does not support increment() functionality.',
++			array('{className}'=>get_class($this))));
++	}*/
+ 	/**
+ 	 * Retrieves multiple values from cache with the specified keys.
+ 	 * Some caches (such as memcache, apc) allow retrieving multiple cached values at one time,
+@@ -126,66 +241,13 @@
+ 		}
+ 		return $results;
+ 	}
+-
+-	/**
+-	 * Stores a value identified by a key into cache.
+-	 * If the cache already contains such a key, the existing value and
+-	 * expiration time will be replaced with the new ones.
+-	 *
+-	 * @param string $id the key identifying the value to be cached
+-	 * @param mixed $value the value to be cached
+-	 * @param integer $expire the number of seconds in which the cached value will expire. 0 means never expire.
+-	 * @param ICacheDependency $dependency dependency of the cached item. If the dependency changes, the item is labeled invalid.
+-	 * @return boolean true if the value is successfully stored into cache, false otherwise
+-	 */
+-	public function set($id,$value,$expire=0,$dependency=null)
+-	{
+-		Yii::trace('Saving "'.$id.'" to cache','system.caching.'.get_class($this));
+-		if($dependency!==null)
+-			$dependency->evaluateDependency();
+-		$data=array($value,$dependency);
+-		return $this->setValue($this->generateUniqueKey($id),serialize($data),$expire);
+-	}
+-
+-	/**
+-	 * Stores a value identified by a key into cache if the cache does not contain this key.
+-	 * Nothing will be done if the cache already contains the key.
+-	 * @param string $id the key identifying the value to be cached
+-	 * @param mixed $value the value to be cached
+-	 * @param integer $expire the number of seconds in which the cached value will expire. 0 means never expire.
+-	 * @param ICacheDependency $dependency dependency of the cached item. If the dependency changes, the item is labeled invalid.
+-	 * @return boolean true if the value is successfully stored into cache, false otherwise
+-	 */
+-	public function add($id,$value,$expire=0,$dependency=null)
+-	{
+-		Yii::trace('Adding "'.$id.'" to cache','system.caching.'.get_class($this));
+-		if($dependency!==null)
+-			$dependency->evaluateDependency();
+-		$data=array($value,$dependency);
+-		return $this->addValue($this->generateUniqueKey($id),serialize($data),$expire);
+-	}
+-
+-	/**
+-	 * Deletes a value with the specified key from cache
+-	 * @param string $id the key of the value to be deleted
+-	 * @return boolean if no error happens during deletion
+-	 */
+-	public function delete($id)
+-	{
+-		Yii::trace('Deleting "'.$id.'" from cache','system.caching.'.get_class($this));
+-		return $this->deleteValue($this->generateUniqueKey($id));
+-	}
+-
++   
+ 	/**
+ 	 * Deletes all values from cache.
+ 	 * Be careful of performing this operation if the cache is shared by multiple applications.
+ 	 * @return boolean whether the flush operation was successful.
+ 	 */
+-	public function flush()
+-	{
+-		Yii::trace('Flushing cache','system.caching.'.get_class($this));
+-		return $this->flushValues();
+-	}
++
+ 
+ 	/**
+ 	 * Retrieves a value from cache with a specified key.
+@@ -265,25 +327,25 @@
+ 	 * @return boolean if no error happens during deletion
+ 	 * @throws CException if this method is not overridden by child classes
+ 	 */
+-	protected function deleteValue($key)
++	protected function deleteValue($key,$expire)
+ 	{
+ 		throw new CException(Yii::t('yii','{className} does not support delete() functionality.',
+ 			array('{className}'=>get_class($this))));
+ 	}
+-
+-	/**
+-	 * Deletes all values from cache.
+-	 * Child classes may implement this method to realize the flush operation.
+-	 * @return boolean whether the flush operation was successful.
+-	 * @throws CException if this method is not overridden by child classes
+-	 * @since 1.1.5
+-	 */
+-	protected function flushValues()
++       
++        protected function flushValues()
++        {
++               throw new CException(Yii::t('yii','{className} does not support flushValues() functionality.',
++                        array('{className}'=>get_class($this))));
++        }	
++		
++    protected function replaceValue($key,$value,$expire)
+ 	{
+-		throw new CException(Yii::t('yii','{className} does not support flushValues() functionality.',
++		throw new CException(Yii::t('yii','{className} does not support replace() functionality.',
+ 			array('{className}'=>get_class($this))));
+ 	}
+ 
++   
+ 	/**
+ 	 * Returns whether there is a cache entry with a specified key.
+ 	 * This method is required by the interface ArrayAccess.
+@@ -327,6 +389,6 @@
+ 	 */
+ 	public function offsetUnset($id)
+ 	{
+-		$this->delete($id);
++		$this->delete($id,0);
+ 	}
+-}
+\ No newline at end of file
++}
+Only in Bae_yii1.1.10/framework/logging: CBaeLogRoute.php
+diff -ru yii-1.1.10.r3566/framework/logging/CEmailLogRoute.php Bae_yii1.1.10/framework/logging/CEmailLogRoute.php
+--- yii-1.1.10.r3566/framework/logging/CEmailLogRoute.php	2012-02-13 09:37:51.000000000 +0800
++++ Bae_yii1.1.10/framework/logging/CEmailLogRoute.php	2012-06-20 18:13:03.000000000 +0800
+@@ -43,7 +43,17 @@
+ 	 * @var array list of additional headers to use when sending an email.
+ 	 */
+ 	private $_headers=array();
+-
++	/**
++         *the queueName of BCMS
++         */
++	public $queueName='';
++	/**
++         *initilize the queueName 
++         */
++	public function __construct($queueName='')
++        {
++                $this->queueName=$queueName;
++        }
+ 	/**
+ 	 * Sends log messages to specified email addresses.
+ 	 * @param array $logs list of log messages
+@@ -57,8 +67,15 @@
+ 		$subject=$this->getSubject();
+ 		if($subject===null)
+ 			$subject=Yii::t('yii','Application Log');
+-		foreach($this->getEmails() as $email)
++		if(IS_BAE)
++		{
++			$this->sendEmail($this->getEmails(),$subject,$message);
++		}
++		else
++		{
++			foreach($this->getEmails() as $email)
+ 			$this->sendEmail($email,$subject,$message);
++		}
+ 	}
+ 
+ 	/**
+@@ -69,10 +86,28 @@
+ 	 */
+ 	protected function sendEmail($email,$subject,$message)
+ 	{
+-		$headers=$this->getHeaders();
+-		if(($from=$this->getSentFrom())!==null)
++		if(IS_BAE)
++		{
++			 require_once ( "Bcms.class.php" ) ;
++       			 $bcms = new Bcms();
++	                 $ret = $bcms->mail ( $this->queueName, $message,json_encode($email)) ;
++
++       			if ( false === $ret )
++       			{
++          			Yii::trace("send log to email is failed");
++       			}
++     	       	        else
++                        {
++         			Yii::trace("send log to email success");
++      	                }
++		}
++		else
++		{
++			$headers=$this->getHeaders();
++			if(($from=$this->getSentFrom())!==null)
+ 			$headers[]="From: {$from}";
+-		mail($email,$subject,$message,implode("\r\n",$headers));
++			mail($email,$subject,$message,implode("\r\n",$headers));
++		}
+ 	}
+ 
+ 	/**
+@@ -89,10 +124,20 @@
+ 	 */
+ 	public function setEmails($value)
+ 	{
+-		if(is_array($value))
++		if(IS_BAE)
++		{
++			if(is_array($value))
++                        	$this->_email=$value;
++                	else
++				$this->_email=preg_split('/[\s,]+/',$value,-1,PREG_SPLIT_NO_EMPTY);                        	
++		}
++		else	
++		{	
++			if(is_array($value))
+ 			$this->_email=$value;
+-		else
++			else
+ 			$this->_email=preg_split('/[\s,]+/',$value,-1,PREG_SPLIT_NO_EMPTY);
++		}	
+ 	}
+ 
+ 	/**
+@@ -148,4 +193,4 @@
+ 		else
+ 			$this->_headers=preg_split('/\r\n|\n/',$value,-1,PREG_SPLIT_NO_EMPTY);
+ 	}
+-}
+\ No newline at end of file
++}
+Only in Bae_yii1.1.10/framework/logging: .CEmailLogRoute.php.swp
+diff -ru yii-1.1.10.r3566/framework/vendors/htmlpurifier/HTMLPurifier.standalone.php Bae_yii1.1.10/framework/vendors/htmlpurifier/HTMLPurifier.standalone.php
+--- yii-1.1.10.r3566/framework/vendors/htmlpurifier/HTMLPurifier.standalone.php	2012-02-13 09:37:50.000000000 +0800
++++ Bae_yii1.1.10/framework/vendors/htmlpurifier/HTMLPurifier.standalone.php	2012-06-20 18:13:03.000000000 +0800
+@@ -12258,7 +12258,8 @@
+                 $chmod = 0644; // invalid config or simpletest
+             }
+             $chmod = $chmod & 0666;
+-            chmod($file, $chmod);
++	    if(!IS_BAE)           
++	   	 chmod($file, $chmod);
+         }
+         return $result;
+     }
+diff -ru yii-1.1.10.r3566/framework/web/CAssetManager.php Bae_yii1.1.10/framework/web/CAssetManager.php
+--- yii-1.1.10.r3566/framework/web/CAssetManager.php	2012-02-13 09:37:56.000000000 +0800
++++ Bae_yii1.1.10/framework/web/CAssetManager.php	2012-06-20 18:13:03.000000000 +0800
+@@ -181,60 +181,71 @@
+ 			return $this->_published[$path];
+ 		else if(($src=realpath($path))!==false)
+ 		{
+-			if(is_file($src))
++			if(IS_BAE)
+ 			{
+-				$dir=$this->hash($hashByName ? basename($src) : dirname($src).filemtime($src));
+-				$fileName=basename($src);
+-				$dstDir=$this->getBasePath().DIRECTORY_SEPARATOR.$dir;
+-				$dstFile=$dstDir.DIRECTORY_SEPARATOR.$fileName;
+-
+-				if($this->linkAssets)
++				$pos = strpos(realPath($path),$_SERVER['HTTP_HOST']);
++		                if($pos!==false){
++                	        $assetPath=substr(realPath($path),$pos+strlen($_SERVER['HTTP_HOST']));
++                        	}
++	                        return $this->_published[$path]= $assetPath;
++			}
++			else
++			{
++				if(is_file($src))
+ 				{
+-					if(!is_file($dstFile))
++					$dir=$this->hash($hashByName ? basename($src) : dirname($src).filemtime($src));
++					$fileName=basename($src);
++					$dstDir=$this->getBasePath().DIRECTORY_SEPARATOR.$dir;
++					$dstFile=$dstDir.DIRECTORY_SEPARATOR.$fileName;
++	
++					if($this->linkAssets)
++					{
++						if(!is_file($dstFile))
++						{
++							if(!is_dir($dstDir))
++							{
++								mkdir($dstDir);
++								@chmod($dstDir, $this->newDirMode);
++							}
++							symlink($src,$dstFile);
++						}
++					}
++					else if(@filemtime($dstFile)<@filemtime($src))
+ 					{
+ 						if(!is_dir($dstDir))
+ 						{
+ 							mkdir($dstDir);
+ 							@chmod($dstDir, $this->newDirMode);
+-						}
+-						symlink($src,$dstFile);
++						}	
++						copy($src,$dstFile);
++						@chmod($dstFile, $this->newFileMode);
+ 					}
++
++					return $this->_published[$path]=$this->getBaseUrl()."/$dir/$fileName";
+ 				}
+-				else if(@filemtime($dstFile)<@filemtime($src))
++				else if(is_dir($src))
+ 				{
+-					if(!is_dir($dstDir))
++					$dir=$this->hash($hashByName ? basename($src) : $src.filemtime($src));
++					$dstDir=$this->getBasePath().DIRECTORY_SEPARATOR.$dir;
++
++					if($this->linkAssets)
+ 					{
+-						mkdir($dstDir);
+-						@chmod($dstDir, $this->newDirMode);
++						if(!is_dir($dstDir))
++							symlink($src,$dstDir);
+ 					}
+-					copy($src,$dstFile);
+-					@chmod($dstFile, $this->newFileMode);
+-				}
+-
+-				return $this->_published[$path]=$this->getBaseUrl()."/$dir/$fileName";
+-			}
+-			else if(is_dir($src))
+-			{
+-				$dir=$this->hash($hashByName ? basename($src) : $src.filemtime($src));
+-				$dstDir=$this->getBasePath().DIRECTORY_SEPARATOR.$dir;
+-
+-				if($this->linkAssets)
+-				{
+-					if(!is_dir($dstDir))
+-						symlink($src,$dstDir);
+-				}
+-				else if(!is_dir($dstDir) || $forceCopy)
+-				{
+-					CFileHelper::copyDirectory($src,$dstDir,array(
++					else if(!is_dir($dstDir) || $forceCopy)
++					{
++						CFileHelper::copyDirectory($src,$dstDir,array(
+ 						'exclude'=>$this->excludeFiles,
+ 						'level'=>$level,
+ 						'newDirMode'=>$this->newDirMode,
+ 						'newFileMode'=>$this->newFileMode,
+ 					));
+-				}
++					}
+ 
+-				return $this->_published[$path]=$this->getBaseUrl().'/'.$dir;
+-			}
++					return $this->_published[$path]=$this->getBaseUrl().'/'.$dir;
++				}
++				}
+ 		}
+ 		throw new CException(Yii::t('yii','The asset "{asset}" to be published does not exist.',
+ 			array('{asset}'=>$path)));
+diff -ru yii-1.1.10.r3566/framework/web/CHttpRequest.php Bae_yii1.1.10/framework/web/CHttpRequest.php
+--- yii-1.1.10.r3566/framework/web/CHttpRequest.php	2012-02-13 09:37:56.000000000 +0800
++++ Bae_yii1.1.10/framework/web/CHttpRequest.php	2012-06-20 18:13:03.000000000 +0800
+@@ -448,6 +448,16 @@
+ 		{
+ 			if(isset($_SERVER['HTTP_X_REWRITE_URL'])) // IIS
+ 				$this->_requestUri=$_SERVER['HTTP_X_REWRITE_URL'];
++			else if((IS_BAE)&&isset($_SERVER['REQUEST_URI'])&&isset($_SERVER['SCRIPT_NAME']))
++			{
++				 $pos = strpos($_SERVER['REQUEST_URI'],$_SERVER['SCRIPT_NAME']);
++                                 if($pos !== false)
++                                 {
++                                       $this->_requestUri=$_SERVER['REQUEST_URI'];
++                                 }
++                                 else
++                                       $this->_requestUri=$_SERVER['SCRIPT_NAME'].$_SERVER['REQUEST_URI'];
++			}
+ 			else if(isset($_SERVER['REQUEST_URI']))
+ 			{
+ 				$this->_requestUri=$_SERVER['REQUEST_URI'];
+diff -ru yii-1.1.10.r3566/framework/web/CUploadedFile.php Bae_yii1.1.10/framework/web/CUploadedFile.php
+--- yii-1.1.10.r3566/framework/web/CUploadedFile.php	2012-02-13 09:37:56.000000000 +0800
++++ Bae_yii1.1.10/framework/web/CUploadedFile.php	2012-06-20 20:36:07.000000000 +0800
+@@ -193,12 +193,27 @@
+ 	{
+ 		if($this->_error==UPLOAD_ERR_OK)
+ 		{
+-			if($deleteTempFile)
+-				return move_uploaded_file($this->_tempName,$file);
+-			else if(is_uploaded_file($this->_tempName))
+-				return copy($this->_tempName, $file);
+-			else
+-				return false;
++                        if(IS_BAE)
++			{
++                                 $bucket = $file;
++		                 $baidu_bcs = new BaiduBCS ();
++                		 $object = '/'.$this->_name;
++                                 $opt['IMPORT_BCS_LOG_METHOD']='baeUserLog';
++                        	 $response = $baidu_bcs->create_object ($bucket , $object, $this->_tempName,$opt);
++	                         if (! $response->isOK ()) 
++                         	        Yii::trace( "Create object failed." );
++				 else
++                			Yii::trace("Create object[$object] in bucket[$bucket] success\n");
++			}
++                        else
++			{
++				if($deleteTempFile)
++					return move_uploaded_file($this->_tempName,$file);
++				else if(is_uploaded_file($this->_tempName))
++					return copy($this->_tempName, $file);
++				else
++					return false;
++ 			}
+ 		}
+ 		else
+ 			return false;
+@@ -272,3 +287,8 @@
+ 			return '';
+ 	}
+ }
++
++function baeUserLog($log)
++{
++	Yii::log($log,CLogger::LEVEL_WARNING);
++}
+diff -ru yii-1.1.10.r3566/framework/web/CWebApplication.php Bae_yii1.1.10/framework/web/CWebApplication.php
+--- yii-1.1.10.r3566/framework/web/CWebApplication.php	2012-02-13 09:37:57.000000000 +0800
++++ Bae_yii1.1.10/framework/web/CWebApplication.php	2012-06-20 18:13:03.000000000 +0800
+@@ -116,7 +116,49 @@
+ 	private $_controller;
+ 	private $_theme;
+ 
++      /**
++       * Configures the module with the specified configuration.
++      * @param array $config the configuration array
++      */
++      public function configure($config)
++      {
++      		if(IS_BAE)
++		{
++                        //test if the db configured by user
++                        if(isset($config['components']['db']['connectionString']))
++                        {
++                                 throw new CException(Yii::t('yii','please remove the db of component in the main.php'));
++			}
++			
++			//test if the cache configured by user
++			if(isset($config['components']['cache']['class']))
++			{
++				 throw new CException(Yii::t('yii','please remove the cache of component in the main.php'));
++			}
++
++			//loading the $baeConfig
++			$baeConfig = dirname(__FILE__).'/../baeconf/baeconfig.php';
++        		if(is_string($baeConfig))
++				$baeConfig = require($baeConfig);	
++			$config['runtimePath'] = sys_get_temp_dir();
++			$configMerge = CMap::mergeArray($baeConfig, $config);	
++        	
++			if(is_array($configMerge))
++			{
++                                foreach($configMerge as $key=>$value)
++                                $this->$key=$value;
++                        }
+ 
++		}
++		else
++		{
++			if(is_array($config))
++	        	{
++        			foreach($config as $key=>$value)
++               			$this->$key=$value;
++        		}
++		}	
++	}
+ 	/**
+ 	 * Processes the current request.
+ 	 * It first resolves the request into controller and action,
+diff -ru yii-1.1.10.r3566/framework/YiiBase.php Bae_yii1.1.10/framework/YiiBase.php
+--- yii-1.1.10.r3566/framework/YiiBase.php	2012-02-13 09:37:57.000000000 +0800
++++ Bae_yii1.1.10/framework/YiiBase.php	2012-06-20 18:13:03.000000000 +0800
+@@ -10,7 +10,10 @@
+  * @package system
+  * @since 1.0
+  */
+-
++/**
++ * difine a constant for test if it is in the enviroment of BAE
++ */
++defined('IS_BAE') or define('IS_BAE',isset($_SERVER['HTTP_BAE_LOGID']));
+ /**
+  * Gets the application start timestamp.
+  */
+@@ -392,7 +395,18 @@
+ 	 */
+ 	public static function autoload($className)
+ 	{
+-		// use include so that the error PHP file may appear
++	       /**
++		*if in the enviroment of BAE,set CBaeMemCache & CBaeLogRoute in the $_coreClass			es
++		*/ 
++		if(IS_BAE)
++                {          
++ 
++                         self::$_coreClasses['CBaeMemCache'] = '/caching/CBaeMemCache.php';
++                         self::$_coreClasses['CBaeLogRoute'] = '/logging/CBaeLogRoute.php';
++                }  	
++
++               // use include so that the error PHP file may appear
++	
+ 		if(isset(self::$classMap[$className]))
+ 			include(self::$classMap[$className]);
+ 		else if(isset(self::$_coreClasses[$className]))
+Only in Bae_yii1.1.10: index.php
