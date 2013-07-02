@@ -2,19 +2,20 @@ body
 {
 	margin: 0;
 	padding: 0;
-	color: #555;
+	color: #333;
 	font: normal 10pt Arial,Helvetica,sans-serif;
 	background: #EFEFEF;
 }
 .landing-page{
-	font: normal 1em "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font: normal 1em "Microsoft YaHei", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
 	color: #FFF;
 	background: url(../images/landing_bg.jpg) no-repeat center center ;
 }
 
 .landing-page .container
 {
-	width: 700px;
+	width: 600px;
+	margin: 50px auto;
 }
 
 #page
@@ -27,9 +28,9 @@ body
 
 #header
 {
-	margin: 0;
+	margin: 0 0 12px 0;
 	padding: 0;
-	border-top: 3px solid #C9E0ED;
+	float: left;
 }
 
 #content
@@ -45,16 +46,32 @@ body
 #footer
 {
 	padding: 10px;
-	margin: 10px 20px;
-	font-size: 0.8em;
+	margin: 30px 0 auto;
+	font-size: 90%;
 	text-align: center;
-	border-top: 1px solid #C9E0ED;
+}
+
+.landing-page #footer
+{
+	text-align: left;
 }
 
 #logo
 {
-	padding: 10px 20px;
 	font-size: 200%;
+	text-indent: -9999px;
+	background: url(../images/logo.png) no-repeat left center;
+	float: left;
+	width: 140px;
+	height: 60px;
+}
+
+#city
+{
+	float: left;
+	color: #329be5;
+	padding: 22px 0 0;
+	font-size: 132%;
 }
 
 #mainmenu
@@ -238,7 +255,65 @@ div.search-form
 	background: #80CFFF;
 }
 
-#request-form .required
+#request-form-box
+{
+	background: rgba(255,255,255,.7);
+	margin: 10px 20px 0 0;
+	float: left;
+	border-radius: 5px;
+	border: 1px solid #CCC;	
+}
+
+#request-form-box h1
+{
+	border-bottom: 1px solid #ccc;
+	font-size: 100%;
+	padding: 15px 5px 10px 5px;
+}
+
+#request-form
+{
+	padding: 5px;
+}
+
+#request-form-box .row
+{
+	position: relative;
+}
+
+#request-form-box label,
+#request-form-box input,
+#request-form-box select
+{
+	position: relative;
+	width: 96%;
+	height: 26px;
+	font-size: 100%;
+}
+
+#request-form-box select
+{
+	font-size: 120%;
+}
+
+#request-desc
+{
+	float: left;
+	font-size: 90%;
+	line-height: 150%;
+	margin: 10px 20px 0 0;
+	-moz-text-shadow: 0 0 5px #000;
+	-webkit-text-shadow: 0 0 5px #000;
+	text-shadow: 0px 0px 5px #000;
+}
+
+#request-desc em
+{
+	color: #f7941e;
+	font-style: normal;
+}
+
+#request-form .required span
 {
 	display: none;
 }

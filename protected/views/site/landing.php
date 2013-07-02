@@ -1,4 +1,9 @@
-<div id="logo"><?php echo CHtml::encode(Yii::app()->name); ?></div>
+<div id="header">
+	<div id="logo"><?php echo CHtml::encode(Yii::app()->name); ?></div>
+	<div id="city">上海</div>
+</div>
+
+<div class="clear"></div>
 
 <?php if(Yii::app()->user->hasFlash('landing')): ?>
 
@@ -8,7 +13,7 @@
 
 <?php else: ?>
 
-<div class="form">
+<div class="form span-6" id="request-form-box">
 
 <h1>请告诉我们您的办公室需求</h1>
 <?php $form=$this->beginWidget('CActiveForm', array(
@@ -60,7 +65,7 @@
 <?php $this->endWidget(); ?>
 
 </div><!-- form -->
-<div>
+<div class="span-6" id="request-desc">
 	<p>还没找到满意的办公地点？<br/>
 我们深知这事有多麻烦…</p>
 
@@ -72,8 +77,8 @@
 请告诉我们您的办公室需求<br/>
 剩下的事情我们帮您搞定！</p>
 
-<p>现在提交需求，返还5%首月租金<br/>
-（每月10个名额）<br/>
+<p>现在提交需求，返还<em>5%</em>首月租金<br/>
+（每月<em>10</em>个名额）<br/>
 </div>
 
 <?php endif; ?>
