@@ -9,7 +9,7 @@ class RequestForm extends CFormModel
 	public $area;
 	public $price;
 	public $workstations;
-	public $industry;
+	public $size;
 	public $mobile;
 
 	/**
@@ -18,7 +18,7 @@ class RequestForm extends CFormModel
 	public function rules()
 	{
 		return array(
-			array('area, price, workstations, industry, mobile', 'required'),
+			array('area, price, workstations, size, mobile', 'required'),
 			array('mobile', 'numerical'),
 		);
 	}
@@ -31,9 +31,10 @@ class RequestForm extends CFormModel
 	public function attributeLabels()
 	{
 		return array(
-			'area'=>'目标商圈',
+			'area'=>'区域/商圈',
 			'price'=>'租金范围',
-			'workstations'=>'工位数量',
+			'workstations'=>'员工数量',
+			'size'=>'租用面积',
 			'industry'=>'所属行业',
 			'mobile'=>'手机号码'
 		);

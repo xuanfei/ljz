@@ -279,21 +279,44 @@ div.search-form
 #request-form-box .row
 {
 	position: relative;
+	height: 40px;
 }
 
-#request-form-box label,
 #request-form-box input,
 #request-form-box select
 {
-	position: relative;
 	width: 96%;
-	height: 26px;
-	font-size: 100%;
+	border: 1px solid #CCC;
+	height: 24px;
 }
 
-#request-form-box select
+#request-form-box label
 {
-	font-size: 120%;
+	position: absolute;
+	color: #999;
+	font-size: 90%;
+	padding: 5px;
+}
+
+#request-form-box input
+{
+	position: absolute;
+	border-radius: 4px;
+}
+
+#request-form-box span select
+{
+	width: 47%;
+}
+
+#request-form-box .buttons input
+{
+	font-size: 110%;
+	border: 1px solid #CCC;
+	background: #042d60;
+	color:#FFF;
+	height: auto;
+	padding: 10px;
 }
 
 #request-desc

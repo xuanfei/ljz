@@ -13,7 +13,7 @@
 
 <?php else: ?>
 
-<div class="form span-6" id="request-form-box">
+<div class="form span-7" id="request-form-box">
 
 <h1>请告诉我们您的办公室需求</h1>
 <?php $form=$this->beginWidget('CActiveForm', array(
@@ -27,33 +27,35 @@
 	<?php echo $form->errorSummary($model); ?>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'area'); ?>
-		<?php echo $form->dropDownList($model,'area',$areas = array(1 => '南京路')); ?>
-		<?php echo $form->error($model,'area'); ?>
+		<span>
+			<?php echo $form->dropDownList($model,'area',$areas = array(1 => '全部区域')); ?>
+			<?php echo $form->error($model,'area'); ?>
+		</span>
+		<span>
+			<?php echo $form->dropDownList($model,'area',$areas = array(1 => '全部商圈')); ?>
+			<?php echo $form->error($model,'area'); ?>
+		</span>
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'price'); ?>
-		<?php echo $form->dropDownList($model,'area',$areas = array(1 => '南京路')); ?>
+		<?php echo $form->dropDownList($model,'area',$areas = array(1 => '租金范围')); ?>
 		<?php echo $form->error($model,'price'); ?>
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'workstations'); ?>
-		<?php echo $form->dropDownList($model,'area',$areas = array(1 => '南京路')); ?>
+		<?php echo $form->dropDownList($model,'area',$areas = array(1 => '员工数量')); ?>
 		<?php echo $form->error($model,'workstations'); ?>
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'industry'); ?>
-		<?php echo $form->dropDownList($model,'area',$areas = array(1 => '南京路')); ?>
-		<?php echo $form->error($model,'industry'); ?>
+		<?php echo $form->dropDownList($model,'size',$areas = array(1 => '租用面积')); ?>
+		<?php echo $form->error($model,'size'); ?>
 	</div>
 
 	<?php if(CCaptcha::checkRequirements()): ?>
 	<div class="row">
-		<?php echo $form->labelEx($model,'mobile'); ?>
 		<?php echo $form->textField($model,'mobile'); ?>
+		<?php echo $form->labelEx($model,'mobile'); ?>
 		<?php echo $form->error($model,'mobile'); ?>
 	</div>
 	<?php endif; ?>
