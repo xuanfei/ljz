@@ -11,6 +11,24 @@ class RequestForm extends CFormModel
 	public $workstations;
 	public $industry;
 	public $mobile;
+	
+	public function getListValues($key)
+	{
+		if($key=="area")
+		{
+			return array("中山公园","南京路","新天地");
+		}else if($key=="workstations")
+		{
+			return array("久光");
+		}else if($key=="price")
+		{
+			return array("10-20k","20-30k","30-50k","超过5万");
+		}else if($key=="industry")
+		{
+			return array("商住两用");
+		}else
+          	return array();
+	}
 
 	/**
 	 * Declares the validation rules.
