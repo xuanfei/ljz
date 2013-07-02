@@ -1,3 +1,9 @@
+<div id="header">
+	<div id="logo"><?php echo CHtml::encode(Yii::app()->name); ?></div>
+	<div id="city">上海</div>
+</div>
+
+<div class="clear"></div>
 
 <?php if(Yii::app()->user->hasFlash('landing')): ?>
 
