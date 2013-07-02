@@ -32,48 +32,25 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->dropDownList($model,'area',$areas = array(1 => '租金范围')); ?>
-=======
-		<?php echo $form->labelEx($model,'area'); ?>
-		<?php echo $form->dropDownList($model,'area',$model->getListValues('area')); ?>
-		<?php echo $form->error($model,'area'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'price'); ?>
 		<?php echo $form->dropDownList($model,'price', $model->getListValues('price')); ?>
->>>>>>> a6feebbc0bef834d4f51dd8ee0b896d672980a50
 		<?php echo $form->error($model,'price'); ?>
 	</div>
 
 	<div class="row">
-<<<<<<< HEAD
-		<?php echo $form->dropDownList($model,'area',$areas = array(1 => '员工数量')); ?>
-=======
-		<?php echo $form->labelEx($model,'workstations'); ?>
 		<?php echo $form->dropDownList($model,'workstations', $model->getListValues('workstations')); ?>
->>>>>>> a6feebbc0bef834d4f51dd8ee0b896d672980a50
 		<?php echo $form->error($model,'workstations'); ?>
 	</div>
 
 	<div class="row">
-<<<<<<< HEAD
-		<?php echo $form->dropDownList($model,'size',$areas = array(1 => '租用面积')); ?>
+		<?php echo $form->dropDownList($model,'size',$model->getListValues('size')); ?>
 		<?php echo $form->error($model,'size'); ?>
-=======
-		<?php echo $form->labelEx($model,'industry'); ?>
-		<?php echo $form->dropDownList($model,'industry',$model->getListValues('industry')); ?>
-		<?php echo $form->error($model,'industry'); ?>
->>>>>>> a6feebbc0bef834d4f51dd8ee0b896d672980a50
 	</div>
 
-	<?php if(CCaptcha::checkRequirements()): ?>
 	<div class="row">
 		<?php echo $form->textField($model,'mobile'); ?>
 		<?php echo $form->labelEx($model,'mobile'); ?>
 		<?php echo $form->error($model,'mobile'); ?>
 	</div>
-	<?php endif; ?>
 
 	<div class="row buttons">
 		<?php echo CHtml::submitButton('提交需求，我们帮你搞定'); ?>
@@ -82,7 +59,7 @@
 <?php $this->endWidget(); ?>
 
 </div><!-- form -->
-<div>
+<div class="span-6" id="request-desc">
 	<p>还没找到满意的办公地点？<br/>
 我们深知这事有多麻烦…</p>
 
