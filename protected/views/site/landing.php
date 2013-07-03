@@ -35,7 +35,7 @@
 			<?php echo $form->error($model,'area'); ?>
 		</span>
 		<span>
-	      	<?php echo $form->dropDownList($model,'district', array("全部商圈")); ?>
+	      	<?php echo $form->dropDownList($model,'district', array("全部商圈"=>"全部商圈")); ?>
 			<?php echo $form->error($model,'district'); ?>
 		</span>
 	</div>
@@ -56,7 +56,7 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->textField($model,'mobile',array('placeholder'=>'手机号码')); ?>
+		<?php echo $form->textField($model,'mobile',array('placeholder'=>'手机或坐机号码')); ?>
 		<?php echo $form->error($model,'mobile'); ?>
 	</div>
 
