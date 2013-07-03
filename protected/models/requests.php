@@ -1,5 +1,5 @@
 <?php
-
+require_once "BaeLog.class.php";
 /**
  * RequestForm class.
  * RequestForm is the data structure for keeping
@@ -168,6 +168,36 @@ class requests extends CActiveRecord
       	array_unshift($a, "全部商圈");
       	return $a;
 	}
+  
+  /**
+	* Save requst to remote api server
+	*/
+  	public function remoteSave()
+    {
+    $logger=BaeLog::getInstance();
+    $data = array(
+      	"city"=>'',
+      	"district"=>$this->area,
+      	"circle"=>$this->district,
+      	"price"=>$this->price,
+      	"staff"=>$this->workstations,
+      	"square"=>$this->size,
+      	"telephone"=>$this->mobile
+      );
+    $data_string = json_encode($data);         
+      $logger->logDEBUG("$data_string:" . $data_string);
+	$ch = curl_init('http://lijizhudataapi.duapp.com/dataapi/requests');                                                                      
+	curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");                                                                     
+	curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);                                                                  
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);                                                                      
+	curl_setopt($ch, CURLOPT_HTTPHEADER, array(                                                                          
+    	'Content-Type: application/json',                                                                                
+    	'Content-Length: ' . strlen($data_string))                                                                       
+		);                                                                                                                   
+	$result = curl_exec($ch);
+    $logger->logDEBUG("$result:" . $result);
+	return (json_decode($result)->{"st"}=='s');
+    }
 
 	/**
 	 * Declares the validation rules.

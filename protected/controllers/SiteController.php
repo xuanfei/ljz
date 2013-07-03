@@ -60,7 +60,7 @@ class SiteController extends Controller
 			if($model->validate())
 			{
               	$logger->logTrace("request form validated");
-				if($model->save())
+				if($model->remoteSave())
                 {
                     $logger ->logTrace("request saved");
 					$this->refresh();
