@@ -156,7 +156,7 @@ class requests extends CActiveRecord
 			    "300-500平米",
 			    "500-800平米",
 			    "800-1000平米",
-			    "1000以上"
+			    "1000平米以上"
 			);
 		}return array();
 	}
@@ -205,7 +205,7 @@ class requests extends CActiveRecord
 	public function rules()
 	{
 		return array(
-          array('mobile', 'numerical','message' => '请输入正确的手机或坐机号码.'),
+          array('mobile', 'numerical','message' => '请输入正确的手机或座机号码.'),
           //array('mobile', 'match','pattern' => '/^13[0-9]{1}[0-9]{8}$|15[0189]{1}[0-9]{8}$|189[0-9]{8}$/','message' => '请输入正确的手机号码.'),
 			array('area, district, price, workstations, size, mobile', 'required'),
 		);
@@ -224,7 +224,7 @@ class requests extends CActiveRecord
 			'price'=>'租金范围',
 			'workstations'=>'工位数量',
 			'industry'=>'所属行业',
-			'mobile'=>'手机或坐机号码'
+			'mobile'=>'手机或座机号码'
 		);
 	}
 }

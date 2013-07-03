@@ -1,19 +1,14 @@
-<div id="header">
-	<div id="logo"><?php echo CHtml::encode(Yii::app()->name); ?></div>
-	<div id="city">上海</div>
-</div>
-
-<div class="clear"></div>
+<div class="form span-7" id="request-form-box">
 
 <?php if(Yii::app()->user->hasFlash('landing')): ?>
 
-<div class="flash-success">
-	<?php echo Yii::app()->user->getFlash('landing'); ?>
+<h1><?php echo Yii::app()->user->getFlash('landing'); ?></h1>
+<div id="request-success">
+	<p>您已成功提交了办公室租用需求。</p>
+	<p>非常感谢您的托付，我们的专业顾问将在24小时内通过电话联系您，期待我们的服务能够给您带去微笑 : )</p>
 </div>
 
 <?php else: ?>
-
-<div class="form span-7" id="request-form-box">
 
 <h1>请告诉我们您的办公室需求</h1>
 <?php $form=$this->beginWidget('CActiveForm', array(
@@ -56,7 +51,7 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->textField($model,'mobile',array('placeholder'=>'手机或坐机号码')); ?>
+		<?php echo $form->textField($model,'mobile',array('placeholder'=>'联系电话（手机更方便）')); ?>
 		<?php echo $form->error($model,'mobile'); ?>
 	</div>
 
@@ -65,20 +60,8 @@
 	</div>
 
 <?php $this->endWidget(); ?>
-
-</div><!-- form -->
-<div class="span-6" id="request-desc">
-	<p>还没找到满意的办公地点？<br/>
-我们深知这事有多麻烦…</p>
-
-<p>我们想凭借10年地产服务经验<br/>
-和很强的议价能力为您租到<br/>
-高性价比的写字楼</p>
-
-<p>我们不是中介，我们不向您收取费用<br/>
-请告诉我们您的办公室需求<br/>
-剩下的事情我们帮您搞定！</p>
-
-</div>
+<!-- form -->
 
 <?php endif; ?>
+
+</div>

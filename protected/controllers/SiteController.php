@@ -51,12 +51,12 @@ class SiteController extends Controller
 	
   	function mailrequst($model)
 	{
-      	$subject = "有新的请求来自lijizu.com - 来自上海";
+      	$subject = "来自lijizu.com（上海）的新需求";
      	$msg = " <!--HTML--> 电话:$model->mobile <br/> 地区: $model->area <br/> 商圈: $model->district" ; 
       
         $logger=BaeLog::getInstance();
 		$bcms = new Bcms ();
-		$ret = $bcms->mail (BCMS_QUEUE, $msg, array("1053348769@qq.com","jebberwocky@gmail.com"),
+		$ret = $bcms->mail (BCMS_QUEUE, $msg, array("request@lijizu.com","jebberwocky@gmail.com"),
 			array( Bcms::MAIL_SUBJECT => $subject));
 		if ( false === $ret )
 		{
@@ -75,6 +75,7 @@ class SiteController extends Controller
 	{
       	$logger=BaeLog::getInstance();
 		$model=new requests;
+		Yii::app()->user->setFlash("landing",null);
 		if(isset($_POST['requests']))
 		{
 			$model->attributes=$_POST['requests'];
@@ -85,7 +86,8 @@ class SiteController extends Controller
                 {
 					//Send notification mail
 					$this->mailrequst($model);
-                    $logger ->logTrace("request saved");
+                    $logger->logTrace("request saved");
+                    Yii::app()->user->setFlash("landing","需求提交成功！");
 					$this->refresh();
                 }else{
                   $logger ->logTrace("request save failed");
