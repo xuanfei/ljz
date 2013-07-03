@@ -164,8 +164,9 @@ class requests extends CActiveRecord
 	public function getDistrict($key)
 	{
       	$v = $this->getAreaData();
-      	$ks = array_keys($v);
-      	return $v[$key];
+      	$a = $v[$key];
+      	array_unshift($a, "全部商圈");
+      	return $a;
 	}
 
 	/**
@@ -174,8 +175,8 @@ class requests extends CActiveRecord
 	public function rules()
 	{
 		return array(
+          	array('mobile', 'match','pattern' => '/^13[0-9]{1}[0-9]{8}$|15[0189]{1}[0-9]{8}$|189[0-9]{8}$/','message' => '请输入正确的手机号码.'),
 			array('area, district, price, workstations, size, mobile', 'required'),
-			array('mobile', 'numerical'),
 		);
 	}
 

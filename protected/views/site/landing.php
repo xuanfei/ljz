@@ -56,8 +56,7 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->textField($model,'mobile'); ?>
-		<?php echo $form->labelEx($model,'mobile'); ?>
+		<?php echo $form->textField($model,'mobile',array('placeholder'=>'手机号码')); ?>
 		<?php echo $form->error($model,'mobile'); ?>
 	</div>
 
