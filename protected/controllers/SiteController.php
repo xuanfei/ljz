@@ -1,5 +1,7 @@
 <?php
+define('BCMS_QUEUE','26ea193064a761ea77c5e968ca85aa60');
 require_once "BaeLog.class.php";
+require_once "Bcms.class.php";
 
 class SiteController extends Controller
 {
@@ -46,7 +48,26 @@ class SiteController extends Controller
 	        	$this->render('error', $error);
 	    }
 	}
-
+	
+  	function mailrequst($model)
+	{
+      	$subject = "有新的请求来自lijizu.com - 来自上海";
+     	$msg = " <!--HTML--> 电话:$model->mobile <br/> 地区: $model->area <br/> 商圈: $model->district" ; 
+      
+        $logger=BaeLog::getInstance();
+		$bcms = new Bcms ();
+		$ret = $bcms->mail (BCMS_QUEUE, $msg, array("1053348769@qq.com","jebberwocky@gmail.com"),
+			array( Bcms::MAIL_SUBJECT => $subject));
+		if ( false === $ret )
+		{
+			$logger->logDebug( 'ERROR MESSAGE: ' . $bcms->errmsg ( ) );
+		}
+		else
+		{
+			$logger->logDebug(  'SUCC, result: ' . print_r ( $ret, true ) ) ;
+		}
+	}
+  
 	/**
 	 * Displays the landing page
 	 */
@@ -62,6 +83,8 @@ class SiteController extends Controller
               	$logger->logTrace("request form validated");
 				if($model->remoteSave())
                 {
+					//Send notification mail
+					$this->mailrequst($model);
                     $logger ->logTrace("request saved");
 					$this->refresh();
                 }else{
