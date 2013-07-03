@@ -1,4 +1,5 @@
 <?php
+require_once "BaeLog.class.php";
 
 class SiteController extends Controller
 {
@@ -51,76 +52,37 @@ class SiteController extends Controller
 	 */
 	public function actionLanding()
 	{
-		$model=new RequestForm;
-		if(isset($_POST['RequestForm']))
+      	$logger=BaeLog::getInstance();
+		$model=new requests;
+		if(isset($_POST['requests']))
 		{
-			$model->attributes=$_POST['RequestForm'];
+			$model->attributes=$_POST['requests'];
 			if($model->validate())
 			{
-				/*
-				$headers="From: {$model->email}\r\nReply-To: {$model->email}";
-				mail(Yii::app()->params['adminEmail'],$model->subject,$model->body,$headers);
-				Yii::app()->user->setFlash('contact','Thank you for contacting us. We will respond to you as soon as possible.');
-				*/
-				$this->refresh();
+              	$logger->logTrace("request form validated");
+				if($model->save())
+                {
+                    $logger ->logTrace("request saved");
+					$this->refresh();
+                }else{
+                  $logger ->logTrace("request save failed");
+                }
 			}
 		}
 		$this->layout = 'landing';
 		$this->render('landing',array('model'=>$model));
 	}
-
-	/**
-	 * Displays the contact page
-	 */
-	public function actionContact()
+  
+  	public function actionDynamicareas()
 	{
-		$model=new ContactForm;
-		if(isset($_POST['ContactForm']))
-		{
-			$model->attributes=$_POST['ContactForm'];
-			if($model->validate())
-			{
-				$headers="From: {$model->email}\r\nReply-To: {$model->email}";
-				mail(Yii::app()->params['adminEmail'],$model->subject,$model->body,$headers);
-				Yii::app()->user->setFlash('contact','Thank you for contacting us. We will respond to you as soon as possible.');
-				$this->refresh();
-			}
-		}
-		$this->render('contact',array('model'=>$model));
-	}
-
-	/**
-	 * Displays the login page
-	 */
-	public function actionLogin()
-	{
-		$model=new LoginForm;
-
-		// if it is ajax validation request
-		if(isset($_POST['ajax']) && $_POST['ajax']==='login-form')
-		{
-			echo CActiveForm::validate($model);
-			Yii::app()->end();
-		}
-
-		// collect user input data
-		if(isset($_POST['LoginForm']))
-		{
-			$model->attributes=$_POST['LoginForm'];
-			// validate user input and redirect to the previous page if valid
-			if($model->validate() && $model->login())
-				$this->redirect(Yii::app()->user->returnUrl);
-		}
-		// display the login form
-		$this->render('login',array('model'=>$model));
-	}
-
-	/**
-	 * Logs out the current user and redirect to homepage.
-	 */
-	public function actionLogout()
-	{
-		Yii::app()->user->logout();
-		$this->redirect(Yii::app()->homeUrl);
+        $logger=BaeLog::getInstance();
+		$model=new requests;
+    	$data=$model->getDistrict($_POST['requests']['area']);
+        $i=0;
+    	foreach($data as $v)
+    	{
+        	echo CHtml::tag('option',
+            	       array('value'=>$v),CHtml::encode($v),true);
+    	}
 	}
 }

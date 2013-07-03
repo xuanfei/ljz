@@ -18,6 +18,7 @@
 <h1>请告诉我们您的办公室需求</h1>
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'request-form',
+	'action' => "/landing", 
 	'enableClientValidation'=>true,
 	'clientOptions'=>array(
 		'validateOnSubmit'=>true,
@@ -28,27 +29,29 @@
 
 	<div class="row">
 		<span>
-			<?php echo $form->dropDownList($model,'area',$areas = array(1 => '全部区域')); ?>
+				<?php echo $form->dropDownList($model,'area',array_combine($model->getListValues('area'),$model->getListValues('area')),array('ajax' => array('type'=>'POST', //request type
+	         	'url'=>('/dynamicareas'),'update'=>'#requests_district' //selector to update
+	))); ?>
 			<?php echo $form->error($model,'area'); ?>
 		</span>
 		<span>
-			<?php echo $form->dropDownList($model,'area',$areas = array(1 => '全部商圈')); ?>
-			<?php echo $form->error($model,'area'); ?>
+	      	<?php echo $form->dropDownList($model,'district', array("全部商圈")); ?>
+			<?php echo $form->error($model,'district'); ?>
 		</span>
 	</div>
 
 	<div class="row">
-		<?php echo $form->dropDownList($model,'price', $model->getListValues('price')); ?>
+		<?php echo $form->dropDownList($model,'price', array_combine($model->getListValues('price'),$model->getListValues('price'))); ?>
 		<?php echo $form->error($model,'price'); ?>
 	</div>
 
 	<div class="row">
-		<?php echo $form->dropDownList($model,'workstations', $model->getListValues('workstations')); ?>
+		<?php echo $form->dropDownList($model,'workstations', array_combine($model->getListValues('workstations'),$model->getListValues('workstations'))); ?>
 		<?php echo $form->error($model,'workstations'); ?>
 	</div>
 
 	<div class="row">
-		<?php echo $form->dropDownList($model,'size',$model->getListValues('size')); ?>
+		<?php echo $form->dropDownList($model,'size',array_combine($model->getListValues('size'),$model->getListValues('size'))); ?>
 		<?php echo $form->error($model,'size'); ?>
 	</div>
 
