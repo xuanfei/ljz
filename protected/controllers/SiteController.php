@@ -88,7 +88,6 @@ class SiteController extends Controller
 					$this->mailrequst($model);
                     $logger->logTrace("request saved");
                     Yii::app()->user->setFlash("landing","需求提交成功！");
-					$this->refresh();
                 }else{
                   $logger ->logTrace("request save failed");
                 }
