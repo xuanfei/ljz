@@ -56,6 +56,11 @@ body
 	text-align: left;
 }
 
+.landing-page #footer a
+{
+	color: #FFF;
+}
+
 #logo
 {
 	font-size: 200%;
@@ -280,35 +285,36 @@ div.search-form
 
 #request-form-box .row
 {
-	position: relative;
-	height: 40px;
-}
-
-#request-form-box input,
-#request-form-box select
-{
-	width: 96%;
-	border: 1px solid #CCC;
-	height: 24px;
+	
 }
 
 #request-form-box label
 {
-	position: absolute;
 	color: #999;
 	font-size: 90%;
 	padding: 5px;
 }
 
+#request-form-box select
+{
+	width: 97%;
+	border: 1px solid #CCC;
+	height: 24px;
+	background: #F0F0F0;
+}
+
 #request-form-box input
 {
-	position: absolute;
+	width: 95%;
+	border: 1px solid #CCC;
+	height: 24px;
 	border-radius: 4px;
+	background: #F0F0F0;
 }
 
 #request-form-box span select
 {
-	width: 47%;
+	width: 48%;
 }
 
 #request-form-box .buttons input
@@ -341,4 +347,22 @@ div.search-form
 #request-form .required span
 {
 	display: none;
+}
+
+#request-success
+{
+	color:#666;
+	font-size: 92%;
+	padding: 6px 6px 10px 56px;
+	background: url(/images/success_icon.png) no-repeat 5px top;
+}
+
+#request-success button
+{
+	font-size: 92%;
+	border: 1px solid #92aed6;
+	background: #aec5e3;
+	color: #265997;
+	height: auto;
+	padding: 4px 10px;
 }

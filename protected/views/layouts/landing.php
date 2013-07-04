@@ -44,7 +44,7 @@
 	<div class="clear"></div>
 
 	<div id="footer">
-		Copyright &copy; <?php echo date('Y'); ?>, www.lijizu.com All Rights Reserved.
+		Copyright &copy; <?php echo date('Y'); ?>, www.lijizu.com All Rights Reserved. <a href="http://www.miibeian.gov.cn/" target="_blank">沪ICP备11035273号</a>
 	</div><!-- footer -->
 
 </div><!-- page -->

@@ -185,7 +185,7 @@ class requests extends CActiveRecord
       	"telephone"=>$this->mobile
       );
     $data_string = json_encode($data);         
-      $logger->logDEBUG("$data_string:" . $data_string);
+      $logger->logDEBUG("curl remote with data_string:$data_string");
 	$ch = curl_init('http://lijizhudataapi.duapp.com/dataapi/requests');                                                                      
 	curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");                                                                     
 	curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);                                                                  
@@ -195,7 +195,7 @@ class requests extends CActiveRecord
     	'Content-Length: ' . strlen($data_string))                                                                       
 		);                                                                                                                   
 	$result = curl_exec($ch);
-    $logger->logDEBUG("$result:" . $result);
+    $logger->logDEBUG("curl remote result:$result");
 	return (json_decode($result)->{"st"}=='s');
     }
 

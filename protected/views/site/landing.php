@@ -6,6 +6,7 @@
 <div id="request-success">
 	<p>您已成功提交了办公室租用需求。</p>
 	<p>非常感谢您的托付，我们的专业顾问将在24小时内通过电话联系您，期待我们的服务能够给您带去微笑 : )</p>
+	<button onclick="document.location.href='/landing';">提交其他需求</button>
 </div>
 
 <?php else: ?>

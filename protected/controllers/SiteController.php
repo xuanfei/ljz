@@ -49,14 +49,17 @@ class SiteController extends Controller
 	    }
 	}
 	
-  	function mailrequst($model)
+  /**
+	*
+	*/
+  	function mailrequst($model,$db)
 	{
       	$subject = "来自lijizu.com（上海）的新需求";
-     	$msg = " <!--HTML--> 电话:$model->mobile <br/> 地区: $model->area <br/> 商圈: $model->district" ; 
+     	$msg = " <!--HTML--> 电话:$model->mobile <br/> 地区: $model->area <br/> 商圈: $model->district <br/> 单价范围: $model->price <br/> 员工人数: $model->workstations <br/> 面积范围: $model->size" ; 
       
         $logger=BaeLog::getInstance();
 		$bcms = new Bcms ();
-		$ret = $bcms->mail (BCMS_QUEUE, $msg, array("request@lijizu.com","jebberwocky@gmail.com"),
+		$ret = $bcms->mail (BCMS_QUEUE, $msg, array("request@lijizu.com"),
 			array( Bcms::MAIL_SUBJECT => $subject));
 		if ( false === $ret )
 		{
@@ -85,12 +88,19 @@ class SiteController extends Controller
 				if($model->remoteSave())
                 {
 					//Send notification mail
-					$this->mailrequst($model);
-                    $logger->logTrace("request saved");
+					$this->mailrequst($model,"remote");
+                    $logger->logTrace("Remote request saved");
                     Yii::app()->user->setFlash("landing","需求提交成功！");
-					$this->refresh();
                 }else{
-                  $logger ->logTrace("request save failed");
+                  if($model->Save()){
+                    //TODO: send notification mail with error message
+                    $this->mailrequst($model,"local");
+                  	$logger ->logTrace("Remote request save failed. Save to local MYSQL");
+                    Yii::app()->user->setFlash("landing","需求提交成功！");
+                  }else{
+                    //local and remote MYSQL failed. use Mongo?
+                    $logger ->logTrace("Save to local MYSQL failed");
+                  }
                 }
 			}
 		}
